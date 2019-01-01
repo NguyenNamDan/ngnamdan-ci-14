@@ -10,6 +10,7 @@ public class PlayerBullet {
     Vector2D position;
     public PlayerBullet() {
         this.image = SpriteUtils.loadImage("assets/images/player-bullets/a/1.png");
+        this.position = new Vector2D(); 
     }
 
     public void render(Graphics g) {
