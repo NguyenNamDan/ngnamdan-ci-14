@@ -20,10 +20,18 @@ public class Vector2D {
         return this;
     }
 
+    public Vector2D add(Vector2D other) {
+        return this.add(other.x, other.y);
+    }
+
     public Vector2D substract(float x, float y) {
         this.x -= x;
         this.y -= y;
         return this;
+    }
+
+    public Vector2D substract(Vector2D other) {
+        return this.substract(other.x, other.y);
     }
 
     public Vector2D scale(float rate) {
@@ -36,6 +44,10 @@ public class Vector2D {
         this.x = x;
         this.y = y;
         return this;
+    }
+
+    public Vector2D set(Vector2D other) {
+        return this.set(other.x, other.y);
     }
 
     public Vector2D clone() {

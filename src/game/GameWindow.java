@@ -78,8 +78,8 @@ public class GameWindow extends JFrame {
 
     private void setupWindow() {
 //        this.setSize(800, 600);
-        this.setTitle("Touhou");
-        this.setResizable(false);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setTitle("Touhou"); //tiêu đề
+        this.setResizable(false); //ko cho thay đổi size
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //ấn x -> tắt hẳn
     }
 }
