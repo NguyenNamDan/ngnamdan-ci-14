@@ -80,6 +80,15 @@ public class Vector2D {
         return this;
     }
 
+    //test
+    @Override
+    public String toString() {
+        return "Vector2D{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
+
 //    public static void main(String []args) {
 //        Vector2D v1 = new Vector2D(1,1);
 //        Vector2D v2 = new Vector2D(3,3);

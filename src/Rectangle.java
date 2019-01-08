@@ -11,28 +11,26 @@ public class Rectangle {
         this.height = height;
     }
 
-    public boolean intersected(Rectangle other) {
-        if((this.position.x + this.width < other.position.x) ||
-                (other.position.x + other.width < this.position.x)) {
-            return false;
-        }
-        else {
-            if((this.position.y + this.height < other.position.y) ||
-                    (other.position.y + other.height < this.position.y)) {
-                return false;
-            }
-            else return true;
-        }
+    public float top() {
+        return this.position.y;
     }
 
-    public static void main(String[] args) {
-        Rectangle rect1 = new Rectangle(0,0,4,4);
-        Rectangle rect2 = new Rectangle(5,5,4,4);
-        Rectangle rect3 = new Rectangle(2,2,4,4);
-        Rectangle rect4 = new Rectangle(3,5,2,2);
-        System.out.println(rect1.intersected(rect2)); // false
-        System.out.println(rect1.intersected(rect3)); // true
-        System.out.println(rect2.intersected(rect3)); // true
-        System.out.println(rect1.intersected(rect4)); // false
+    public float bot() {
+        return this.top() + height;
+    }
+
+    public float left() {
+        return this.position.x;
+    }
+
+    public float right() {
+        return this.left() + width;
+    }
+
+    public boolean intersected(Rectangle other) {
+        return this.top() <= other.bot()
+            && this.bot() >= other.top()
+            && this.right() >= other.left()
+            && this.left() <= other.right();
     }
 }
