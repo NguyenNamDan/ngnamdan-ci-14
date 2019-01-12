@@ -2,15 +2,20 @@ package game;
 
 import game.renderer.Animation;
 import game.renderer.SingleImageRenderer;
+import physics.BoxColider;
+import physics.Physics;
 import tklibs.SpriteUtils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Player extends GameObject{
-    Sphere sphereLeft;
-    Sphere sphereRight;
+public class Player extends GameObject implements Physics {
+    public Sphere sphereLeft;
+    public Sphere sphereRight;
+    BoxColider boxColider;
+    FrameCounter fireCounter;
+    int bloodsPlayer;
 
     public Player() {
         super();
@@ -28,6 +33,9 @@ public class Player extends GameObject{
         this.sphereLeft = new Sphere();
         this.sphereRight = new Sphere();
         this.updateSpherePosition();
+        this.boxColider = new BoxColider(this.position, 32, 48);
+        this.fireCounter = new FrameCounter(20);
+        this.bloodsPlayer = 3;
     }
 
 
@@ -47,10 +55,8 @@ public class Player extends GameObject{
                 .add(30,30);
     }
 
-    int count; //TODO: continue editing
     private void fire() {
-        count++;
-        if(count > 20) {
+        if(fireCounter.run()) {
             if(GameWindow.isFirePress) {
                 float startAngle = -(float)Math.PI/4;
                 float endAngle = -3 * (float)Math.PI/4;
@@ -58,9 +64,9 @@ public class Player extends GameObject{
 
                 for (int i = 0; i < 5; i++) {
                     PlayerBullet bullet = new PlayerBullet();
-                    bullet.position.set(this.position.x, this.position.y);
+                    bullet.position.set(this.position.x - 15, this.position.y);
                     bullet.velocity.setAngle(startAngle + offset * i);
-                    this.count = 0;
+                    this.fireCounter.reset();
                 }
             }
         }
@@ -91,11 +97,26 @@ public class Player extends GameObject{
         if (this.position.y > 600 - 48) {
             this.position.set(this.position.x, 600 - 48);
         }
-        if (this.position.x < 0) {
-            this.position.set(0,this.position.y);
+        if (this.position.x < 16) {
+            this.position.set(16,this.position.y);
         }
-        if (this.position.x > 384 - 32) {
-            this.position.set(384 - 32, this.position.y);
+        if (this.position.x > 384 - 32 - 16) {
+            this.position.set(384 - 32 - 16, this.position.y);
+        }
+    }
+
+    @Override
+    public BoxColider getBoxColider() {
+        return this.boxColider;
+    }
+
+
+    public void takeDamage() {
+        this.bloodsPlayer--;
+        if (this.bloodsPlayer == 0) {
+            this.deactive();
+            this.sphereLeft.deactive();
+            this.sphereRight.deactive();
         }
     }
 }
